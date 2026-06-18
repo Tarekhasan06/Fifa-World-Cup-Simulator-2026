@@ -3,219 +3,150 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Academic resource portal for study materials, books, and resources — for department students." />
-  <meta name="theme-color" content="#0D1B4B" />
-  <title>StudyHub — Academic Portal</title>
-
-  <!-- Google Fonts -->
+  <title>FIFA World Cup 2026™ Predictor & Simulator | Canada • Mexico • USA</title>
+  <meta name="description" content="Predict and simulate the entire FIFA World Cup 2026 tournament. Set scores for all 48 teams across 12 groups, track standings, and navigate the knockout bracket to crown your champion." />
+  <meta name="theme-color" content="#060a1a" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet" />
-
-  <!-- Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
 
-  <!-- ============================
-       LOADING SCREEN
-  ============================= -->
-  <div id="loading-screen" class="loading-screen">
-    <div class="loading-content">
-      <div class="loading-logo">
-        <span class="material-icons-round">school</span>
-      </div>
-      <div class="loading-spinner"></div>
-      <p>Loading StudyHub...</p>
-    </div>
-  </div>
-
-  <!-- ============================
-       TOAST NOTIFICATIONS
-  ============================= -->
-  <div id="toast-container" class="toast-container"></div>
-
-  <!-- ============================
-       MODAL OVERLAY
-  ============================= -->
-  <div id="modal-overlay" class="modal-overlay hidden" onclick="handleModalOverlayClick(event)">
-    <div id="modal-box" class="modal-box">
-      <div class="modal-header">
-        <h3 id="modal-title">Modal</h3>
-        <button class="modal-close" onclick="closeModal()" title="Close">
-          <span class="material-icons-round">close</span>
-        </button>
-      </div>
-      <div id="modal-body" class="modal-body"></div>
-    </div>
-  </div>
-
-  <!-- ============================
-       CONFIRM DIALOG
-  ============================= -->
-  <div id="confirm-overlay" class="modal-overlay hidden">
-    <div class="modal-box confirm-box">
-      <div class="modal-header danger-header">
-        <h3>Confirm Delete</h3>
-      </div>
-      <div class="modal-body">
-        <div class="confirm-icon">
-          <span class="material-icons-round">warning_amber</span>
-        </div>
-        <p id="confirm-message" class="confirm-message">Are you sure? This action cannot be undone.</p>
-        <div class="confirm-actions">
-          <button class="btn btn-secondary" onclick="resolveConfirm(false)">Cancel</button>
-          <button class="btn btn-danger" onclick="resolveConfirm(true)">
-            <span class="material-icons-round">delete</span> Delete
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ============================
-       NAVIGATION
-  ============================= -->
+  <!-- ═══ NAVBAR ═══ -->
   <nav class="navbar" id="navbar">
-    <div class="nav-container">
-      <a href="#/home" class="nav-brand">
-        <span class="material-icons-round nav-brand-icon">school</span>
-        <div class="nav-brand-text">
-          <span class="nav-title">StudyHub</span>
-          <span class="nav-subtitle" id="nav-dept-subtitle">[DEPARTMENT_NAME]</span>
-        </div>
-      </a>
-
-      <!-- Hamburger -->
-      <button class="hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
+    <a href="#" class="navbar-brand" onclick="switchTab('groups'); return false;">
+      <span class="trophy">🏆</span>
+      <span>FIFA World Cup <span class="accent">2026™</span></span>
+    </a>
+    <div class="navbar-actions">
+      <button class="btn btn-primary btn-sm" id="btn-simulate-all" title="Auto-simulate the entire tournament">
+        ⚡ Simulate All
       </button>
-
-      <!-- Nav Links -->
-      <div class="nav-links" id="nav-links">
-        <a href="#/home" class="nav-link" data-route="home">
-          <span class="material-icons-round">home</span> Home
-        </a>
-        <a href="#/content" class="nav-link" data-route="content">
-          <span class="material-icons-round">library_books</span> Content
-        </a>
-
-        <!-- Semesters Dropdown -->
-        <div class="nav-dropdown" id="semester-nav-dropdown">
-          <span class="nav-link dropdown-toggle" onclick="toggleNavDropdown('semester-nav-dropdown')">
-            <span class="material-icons-round">calendar_today</span>
-            Semesters
-            <span class="material-icons-round dropdown-arrow">expand_more</span>
-          </span>
-          <div class="dropdown-menu" id="semester-dropdown-menu">
-            <div class="dropdown-loading">
-              <span class="material-icons-round spin">sync</span> Loading...
-            </div>
-          </div>
-        </div>
-
-        <a href="#/books" class="nav-link" data-route="books">
-          <span class="material-icons-round">menu_book</span> Books
-        </a>
-        <a href="#/software" class="nav-link" data-route="software">
-          <span class="material-icons-round">computer</span> Software
-        </a>
-        <a href="#/tutorials" class="nav-link" data-route="tutorials">
-          <span class="material-icons-round">play_circle</span> Tutorials
-        </a>
-        <a href="#/notices" class="nav-link" data-route="notices">
-          <span class="material-icons-round">notifications</span> Notices
-        </a>
-        <a href="#/contact" class="nav-link" data-route="contact">
-          <span class="material-icons-round">contact_mail</span> Contact
-        </a>
-
-        <!-- Auth Nav -->
-        <div id="nav-auth" class="nav-auth">
-          <!-- Populated by app.js -->
-        </div>
-      </div>
+      <button class="btn btn-danger btn-sm" id="btn-reset-all" title="Reset all predictions">
+        ↻ Reset
+      </button>
     </div>
   </nav>
 
-  <!-- ============================
-       MAIN APP CONTENT
-  ============================= -->
-  <main id="app" class="app-main"></main>
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="hero">
+    <h1 class="hero-title">
+      <span class="gradient-text">Predictor & Simulator</span>
+    </h1>
+    <p class="hero-subtitle">
+      Predict every match of the <span class="host">Canada • Mexico • USA 2026</span> World Cup
+    </p>
 
-  <!-- ============================
-       FOOTER
-  ============================= -->
-  <footer class="footer" id="site-footer">
-    <div class="footer-container">
-      <div class="footer-grid">
-        <div class="footer-col footer-col-brand">
-          <div class="footer-brand">
-            <span class="material-icons-round">school</span>
-            <span id="footer-site-name">StudyHub</span>
-          </div>
-          <p id="footer-dept-name" class="footer-dept">[DEPARTMENT_NAME]</p>
-          <p id="footer-uni-name" class="footer-uni">[UNIVERSITY_NAME]</p>
-          <p class="footer-tagline">Your one-stop portal for academic resources.</p>
-        </div>
-        <div class="footer-col">
-          <h4>Quick Links</h4>
-          <ul class="footer-links">
-            <li><a href="#/home"><span class="material-icons-round">home</span> Home</a></li>
-            <li><a href="#/books"><span class="material-icons-round">menu_book</span> Books</a></li>
-            <li><a href="#/software"><span class="material-icons-round">computer</span> Software</a></li>
-            <li><a href="#/notices"><span class="material-icons-round">notifications</span> Notices</a></li>
-            <li><a href="#/contact"><span class="material-icons-round">contact_mail</span> Contact</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Semesters</h4>
-          <ul class="footer-links" id="footer-semesters">
-            <!-- Populated by app.js -->
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h4>Portal Info</h4>
-          <p class="footer-note">
-            <span class="material-icons-round">lock</span>
-            This portal is restricted to enrolled students of the department only. Unauthorized access is strictly prohibited.
-          </p>
-          <a href="#/contact" class="btn btn-outline-white btn-sm mt-2">
-            <span class="material-icons-round">mail</span> Contact Admin
-          </a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p id="footer-copyright">© 2025 [UNIVERSITY_NAME] — [DEPARTMENT_NAME]</p>
-        <p id="footer-internal-note" class="footer-restricted">
-          <span class="material-icons-round">lock</span>
-          For Internal Academic Use Only
-        </p>
+    <!-- Mode Toggle -->
+    <div class="mode-toggle-wrapper">
+      <div class="mode-toggle" id="mode-toggle">
+        <button class="mode-option active" data-mode="ranking">
+          <span class="mode-icon">📊</span>
+          <span class="mode-label">Ranking Mode</span>
+          <span class="mode-desc">Rank teams by your analysis</span>
+        </button>
+        <button class="mode-option" data-mode="score">
+          <span class="mode-icon">⚽</span>
+          <span class="mode-label">Score Mode</span>
+          <span class="mode-desc">Enter match scores</span>
+        </button>
       </div>
     </div>
+
+    <div class="hero-actions">
+      <button class="btn btn-primary" id="btn-hero-simulate">⚡ Auto-Simulate Tournament</button>
+      <button class="btn btn-secondary" id="btn-hero-start">📝 Start Predicting</button>
+    </div>
+  </section>
+
+  <!-- ═══ TAB NAVIGATION ═══ -->
+  <div class="tabs" id="tabs">
+    <button class="tab-btn active" data-tab="groups">🏟️ Group Stage</button>
+    <button class="tab-btn" data-tab="third">📊 Best 3rd Places</button>
+    <button class="tab-btn" data-tab="knockout">🏆 Knockout Bracket</button>
+    <button class="tab-btn" data-tab="summary">📋 Summary</button>
+  </div>
+
+  <!-- ═══ GROUP STAGE TAB ═══ -->
+  <div class="tab-content active" id="tab-groups" data-tab="groups">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Group Stage</h2>
+        <p class="section-subtitle">Drag teams up or down to rank them 1st → 4th in each group</p>
+      </div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn btn-secondary btn-sm" id="btn-simulate-groups" style="display:none;">⚡ Simulate All Groups</button>
+        <button class="btn btn-danger btn-sm" id="btn-reset-groups">↻ Reset Groups</button>
+      </div>
+    </div>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-color qualified"></span> Qualified (1st/2nd)</div>
+      <div class="legend-item"><span class="legend-color third"></span> Potential 3rd-place qualifier</div>
+      <div class="legend-item"><span class="legend-color eliminated"></span> Eliminated</div>
+    </div>
+    <div class="groups-grid" id="groups-grid">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+
+  <!-- ═══ BEST THIRD-PLACED TAB ═══ -->
+  <div class="tab-content" id="tab-third" data-tab="third">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Best Third-Placed Teams</h2>
+        <p class="section-subtitle">Top 8 third-placed teams advance to the Round of 32</p>
+      </div>
+    </div>
+    <div class="third-place-section" id="third-place-container">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+
+  <!-- ═══ KNOCKOUT BRACKET TAB ═══ -->
+  <div class="tab-content" id="tab-knockout" data-tab="knockout">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Knockout Stage</h2>
+        <p class="section-subtitle">Click on a match to pick the winner or auto-simulate</p>
+      </div>
+      <div class="knockout-controls">
+        <button class="btn btn-secondary btn-sm" id="btn-simulate-knockout">⚡ Simulate Knockout</button>
+        <button class="btn btn-danger btn-sm" id="btn-reset-knockout">↻ Reset Knockout</button>
+      </div>
+    </div>
+    <p class="bracket-scroll-hint">← Scroll horizontally to see the full bracket →</p>
+    <div class="bracket-container" id="bracket-container">
+      <!-- Generated by JS -->
+    </div>
+    <div id="champion-display"></div>
+  </div>
+
+  <!-- ═══ SUMMARY TAB ═══ -->
+  <div class="tab-content" id="tab-summary" data-tab="summary">
+    <div class="section-header">
+      <div>
+        <h2 class="section-title">Tournament Summary</h2>
+        <p class="section-subtitle">Overview of your predicted tournament</p>
+      </div>
+    </div>
+    <div id="summary-container">
+      <!-- Generated by JS -->
+    </div>
+  </div>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="footer">
+    FIFA World Cup 2026™ Predictor — Fan-made simulation tool. Not affiliated with FIFA.
   </footer>
 
-  <!-- ============================
-       FIREBASE SDK
-  ============================= -->
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+  <!-- ═══ KNOCKOUT MODAL ═══ -->
+  <div id="ko-modal" class="ko-modal-overlay" style="display:none;"></div>
 
-  <!-- App Scripts (order matters) -->
-  <script src="js/firebase-config.js"></script>
-  <script src="js/db.js"></script>
-  <script src="js/pages/home.js"></script>
-  <script src="js/pages/auth.js"></script>
-  <script src="js/pages/semester.js"></script>
-  <script src="js/pages/books.js"></script>
-  <script src="js/pages/software.js"></script>
-  <script src="js/pages/tutorials.js"></script>
-  <script src="js/pages/notices.js"></script>
-  <script src="js/pages/contact.js"></script>
-  <script src="js/pages/admin.js"></script>
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/engine.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
